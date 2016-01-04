@@ -50,4 +50,18 @@ describe "User" do
     user2.should_not be_valid
   end
 
+  it "password should be present " do
+    user1 = build(:user, password: "b" * 6, password_confirmation: "b" * 6).should be_valid
+  end
+
+  it "password and confirmation password should be the same" do
+    user1 = build(:user, password: "b" * 6, password_confirmation: "b" * 7).should_not be_valid
+    user2 = build(:user, password: "b" * 6, password_confirmation: "a" * 6).should_not be_valid
+  end
+
+  it "password should have minimum length" do
+    user1 = build(:user, password: "a", password_confirmation: "a").should_not be_valid
+    user2 = build(:user, password: "b" * 5, password_confirmation: "b" * 5).should_not be_valid
+  end
+
 end
